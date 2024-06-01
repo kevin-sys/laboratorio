@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Practice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="laboratorio.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    
+    <form id="loginForm">
+        <h1>Práctica de SQL Injection</h1>
+        <div class="input-container">
+            <i class="fas fa-user icon"></i>
+            <input type="text" id="username" name="username" placeholder="Nombre de usuario">
+        </div>
+        <div class="input-container">
+            <i class="fas fa-lock icon"></i>
+            <input type="password" id="password" name="password" placeholder="Contraseña">
+        </div>
+        <input type="submit" value="Enviar" class="submit-button">
+    </form>
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').submit(function(event) {
+                event.preventDefault();
+
+                var username = $('#username').val();
+                var password = $('#password').val();
+
+                $.ajax({
+                    url: 'laboratorio.php',
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    success: function(response) {
+                        alert(response); 
+                        if (response.trim() === 'Login exitoso!') { 
+                            window.location.href = 'bienvenidos.html'; 
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error en la solicitud: ' + error); 
+                    }
+                });
+            });
+        });
+
+
+    </script>
+    
+</body>
+</html>
